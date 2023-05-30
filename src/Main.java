@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main {
@@ -12,9 +14,17 @@ public class Main {
             "Яблоко",
             "Молоко"
     };
-    public static void main(String[] args) {
 
-        Basket basket = new Basket(products, prices);
+    static File saveFile = new File("basket.txt");
+    public static void main(String[] args) throws FileNotFoundException {
+
+        Basket basket = null;
+
+        if (saveFile.exists()) {
+            basket = Basket.loadFromTxtFile(saveFile);
+        } else {
+            basket = new Basket(products, prices);
+        }
 
         while (true) {
             showPrice();
@@ -27,6 +37,7 @@ public class Main {
             int productNumber = Integer.parseInt(parts[0]) - 1;
             int productCount = Integer.parseInt(parts[1]);
             basket.addToCard(productNumber, productCount);
+            basket.saveTxt(saveFile);
         }
         basket.printCart();
     }
