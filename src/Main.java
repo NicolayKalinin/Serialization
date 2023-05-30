@@ -15,13 +15,13 @@ public class Main {
             "Молоко"
     };
 
-    static File saveFile = new File("basket.txt");
-    public static void main(String[] args) throws FileNotFoundException {
+    static File saveFile = new File("basket.bin");
+    public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException {
 
         Basket basket = null;
 
         if (saveFile.exists()) {
-            basket = Basket.loadFromTxtFile(saveFile);
+            basket = Basket.loadFromBinFile(saveFile);
         } else {
             basket = new Basket(products, prices);
         }
@@ -37,7 +37,7 @@ public class Main {
             int productNumber = Integer.parseInt(parts[0]) - 1;
             int productCount = Integer.parseInt(parts[1]);
             basket.addToCard(productNumber, productCount);
-            basket.saveTxt(saveFile);
+            basket.saveBin(saveFile);
         }
         basket.printCart();
     }
