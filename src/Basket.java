@@ -16,6 +16,8 @@ public class Basket {
         this.quantities = new int[goods.length];
     }
 
+
+
     public void addToCard(int productNum, int amount) {
         quantities[productNum] += amount;
     }
@@ -53,7 +55,7 @@ public class Basket {
 
     public static Basket loadFromTxtFile(File textFile) {
         Basket basket = new Basket();
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(textFile))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(textFile))) {
             String goodsStr = bufferedReader.readLine();
             String pricesStr = bufferedReader.readLine();
             String quantitiesStr = bufferedReader.readLine();
@@ -71,6 +73,31 @@ public class Basket {
             throw new RuntimeException(e);
         }
 
-        return basket;
+        public static void saveJSON (File file){
+            try (PrintWriter writer = new PrintWriter(file)) {
+                Gson gson = new Gson();
+                String json = gson.toJson(this);
+                writer.print(json);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+            public static Basket loadFromJSONFile (File saveFile){
+            }
+            Basket basket = null;
+            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+                StringBuilder builder = new StringBuilder();
+                String Line = null;
+                while ((Line = reader.readLine()) != null) {
+                    builder.append(Line);
+                }
+                Gson gson = new Gson();
+                builder = gson.fromJson(builder.toString(), Basket.class);
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            return basket;
+        }
     }
-}

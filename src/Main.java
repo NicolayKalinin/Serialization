@@ -15,29 +15,32 @@ public class Main {
             "Молоко"
     };
 
-    static File saveFile = new File("basket.txt");
+    static File saveFile = new File("basket.json");
     public static void main(String[] args) throws FileNotFoundException {
 
         Basket basket = null;
 
         if (saveFile.exists()) {
-            basket = Basket.loadFromTxtFile(saveFile);
+            basket = Basket.loadFromJSONFile(saveFile);
         } else {
             basket = new Basket(products, prices);
         }
 
+        ClientLog log = new ClientLog();
         while (true) {
             showPrice();
             System.out.print("Выберете товар и количество через пробел или введите end: ");
             String input = scanner.nextLine();
             if ("end".equals(input)) {
+                log.exportAsCSV(new File("log.csv"));
                 break;
             }
             String[] parts = input.split(" ");
             int productNumber = Integer.parseInt(parts[0]) - 1;
             int productCount = Integer.parseInt(parts[1]);
             basket.addToCard(productNumber, productCount);
-            basket.saveTxt(saveFile);
+            log.log(productNumber, productCount);
+            basket.saveJSON(saveFile);
         }
         basket.printCart();
     }
