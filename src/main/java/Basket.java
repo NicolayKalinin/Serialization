@@ -75,8 +75,10 @@ public class Basket {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return basket;
+    }
 
-        public static void saveJSON (File) {
+    public void saveJSON(File file) {
         try (PrintWriter writer = new PrintWriter(file)) {
             Gson gson = new Gson();
             String json = gson.toJson(this);
@@ -84,14 +86,14 @@ public class Basket {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        }
+    }
 
-        public static void loadFromJSONFile(saveFile) {
-                basket = null;
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+    public static Basket loadFromJSONFile(File saveFile) {
+        Basket basket = null;
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(saveFile))) {
             StringBuilder builder = new StringBuilder();
             String Line = null;
-            while ((Line = reader.readLine()) != null) {
+            while ((Line = bufferedReader.readLine()) != null) {
                 builder.append(Line);
             }
             Gson gson = new Gson();
@@ -100,8 +102,7 @@ public class Basket {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-            }
-
         return basket;
     }
+
 }
