@@ -2,6 +2,18 @@ import java.io.*;
 import java.util.Arrays;
 
 public class Basket {
+    public String[] getGoods() {
+        return goods;
+    }
+
+    public int[] getPrices() {
+        return prices;
+    }
+
+    public int[] getQuantities() {
+        return quantities;
+    }
+
     private String[] goods;
     private int[] prices;
     private int[] quantities;
